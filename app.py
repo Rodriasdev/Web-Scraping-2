@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import urllib.request
 
 def requestToThePage(url):
     response = requests.get(url)
@@ -16,8 +15,8 @@ def captureTags(url):
 
     results = soup.find_all('img')
 
-    count = 0
-    for img in results:
+
+    for i, img in enumerate(results, start=1):
 
         response = requests.get(img['src'])
 
@@ -25,10 +24,9 @@ def captureTags(url):
 
         print(img['src'][-4:])
 
-        with open(f'./img/imagen{str(count)+formato}', 'wb') as f:
+        with open(f'./img/imagen_{str(i)+formato}', 'wb') as f:
             f.write(response.content)
 
-        count = count +1
 
     
 
