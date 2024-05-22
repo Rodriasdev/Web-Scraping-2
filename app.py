@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
+formatos_aceptados=['jpg', 'png', 'webp']
+
 def requestToThePage(url):
     response = requests.get(url)
 
@@ -15,23 +17,15 @@ def captureTags(url):
 
     results = soup.find_all('img')
 
-
     for i, img in enumerate(results, start=1):
 
         response = requests.get(img['src'])
 
-        formato = img['src'][-4:]
-
-        print(img['src'][-4:])
-
-        with open(f'./img/imagen_{str(i)+formato}', 'wb') as f:
-            f.write(response.content)
-
-
-    
+        formato = img['src'][-3:]
+        
+        if formato in formatos_aceptados:
+            with open(f'./img/imagen_{str(i)+'.'+formato}', 'wb') as f:
+                f.write(response.content)
 
 
-
-
-
-print(captureTags("https://cuevana3i.online/pelicula/"))
+captureTags("https://cuevana3i.online/pelicula/")
