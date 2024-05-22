@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-
+import urllib.request
 
 def requestToThePage(url):
     response = requests.get(url)
@@ -16,30 +16,21 @@ def captureTags(url):
 
     results = soup.find_all('img')
 
-    
+    count = 0
     for img in results:
-        print(img)
 
+        response = requests.get(img['src'])
 
-    # labels={
+        formato = img['src'][-4:]
 
-    # }
+        print(img['src'][-4:])
 
-    # for a in results:
+        with open(f'./img/imagen{str(count)+formato}', 'wb') as f:
+            f.write(response.content)
 
-    #     if a['href'][:5] != 'https':
-    #         page = requestToThePage(url + a['href'])
+        count = count +1
 
-    #         res = page.find_all(["h1", "p"])
-
-    #         listOfLabels = []
-
-    #         for label in res:
-    #             listOfLabels.append(label)
-            
-    #         labels[url + a['href']] = listOfLabels
-
-
+    
 
 
 
